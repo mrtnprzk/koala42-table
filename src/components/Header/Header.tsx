@@ -4,8 +4,8 @@ import { FC } from 'react';
 
 const Header: FC = () => {
     return (
-        <header className="bg-black fixed left-0 right-0 shadow-xl px-2 py-3">
-            <div className="container flex justify-between items-center mx-auto">
+        <header className="bg-black sticky top-0 shadow-xl px-2 py-3 lg:px-6">
+            <div className="flex justify-between items-center">
                 <Link href={'https://koala42.com/'}>
                     <Image
                         src="/koala-logo.svg"
@@ -21,7 +21,7 @@ const Header: FC = () => {
                     <Image
                         src="/github-logo.svg"
                         alt="Github Logo"
-                        className="w-10 lg:w-14 h-auto"
+                        className="w-10 lg:w-12 h-auto"
                         width={50}
                         height={50}
                         priority

@@ -1,7 +1,22 @@
+import { useEffect, useState } from 'react';
+
+import mockData from '@/__mocks__/example-data.json';
+import KoalaTable from '@/components/KoalaTable/KoalaTable';
+import Loader from '@/components/Loader/Loader';
+
 export default function Home() {
-    return (
-        <main className="">
-            <h1 className="text-red-500">Hello KOALA42!</h1>
-        </main>
-    );
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [data, setData] = useState<any>([]);
+
+    //simulating fetching data
+    useEffect(() => {
+        setIsLoading(true);
+        setData(mockData);
+
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+    }, []);
+
+    return <>{isLoading ? <Loader /> : <KoalaTable data={data} />}</>;
 }
