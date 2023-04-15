@@ -6,8 +6,8 @@ import { NemesisData, SecretRecord } from '@/global/types';
 import { cx } from '@/lib/classnames';
 import ChildrenOfChildren from './ChildrenOfChildren';
 
-interface BodyCharacterProps {
-    characterData: NemesisData;
+interface BodyNemesisProps {
+    nemesisData: NemesisData;
     secretData:
         | object
         | {
@@ -18,7 +18,7 @@ interface BodyCharacterProps {
     bgColor: string;
 }
 
-const BodyCharacter: FC<BodyCharacterProps> = ({ characterData, secretData, bgColor }): JSX.Element => {
+const BodyNemesis: FC<BodyNemesisProps> = ({ nemesisData, secretData, bgColor }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
 
     const secret = secretData as { has_secrete?: { records: SecretRecord[] } };
@@ -35,10 +35,10 @@ const BodyCharacter: FC<BodyCharacterProps> = ({ characterData, secretData, bgCo
                         />
                     )}
                 </td>
-                <td>{characterData?.ID}</td>
-                <td>{characterData?.['Is alive?']}</td>
-                <td>{characterData?.['Character ID']}</td>
-                <td>{characterData?.Years}</td>
+                <td>{nemesisData?.ID}</td>
+                <td>{nemesisData?.['Is alive?']}</td>
+                <td>{nemesisData?.['Character ID']}</td>
+                <td>{nemesisData?.Years}</td>
                 <td>
                     <Cross className="m-auto" onClick={() => alert('TODO')} />
                 </td>
@@ -51,4 +51,4 @@ const BodyCharacter: FC<BodyCharacterProps> = ({ characterData, secretData, bgCo
     );
 };
 
-export default BodyCharacter;
+export default BodyNemesis;
