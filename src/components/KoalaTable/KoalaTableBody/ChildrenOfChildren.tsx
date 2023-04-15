@@ -1,9 +1,11 @@
 import { FC } from 'react';
+
+import { SecretRecord } from '@/global/types';
 import BodySecret from './BodySecret';
 
 interface ChildrenOfChildrenProps {
     bgColor: string;
-    secretData: any; //TODO: add type
+    secretData: SecretRecord[];
 }
 
 const ChildrenOfChildren: FC<ChildrenOfChildrenProps> = ({ bgColor, secretData }): JSX.Element => {
@@ -17,8 +19,8 @@ const ChildrenOfChildren: FC<ChildrenOfChildrenProps> = ({ bgColor, secretData }
                 <th className={'bg-koalaGreen'}>delete</th>
                 <th colSpan={6} />
             </tr>
-            {secretData?.map(({ data }: { data: any }, i: number) => (
-                <BodySecret key={i} bgColor={bgColor} secretData={data} />
+            {secretData?.map(({ data }) => (
+                <BodySecret key={data.ID} bgColor={bgColor} secretData={data} />
             ))}
         </>
     );

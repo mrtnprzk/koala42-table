@@ -1,9 +1,10 @@
 import { FC } from 'react';
 
+import { NemesisRecord } from '@/global/types';
 import BodyCharacter from './BodyCharacter';
 
 interface ChildrenOfParentProps {
-    childrenData: any; //TODO: add type
+    childrenData: NemesisRecord[];
     bgColor: string;
 }
 
@@ -20,8 +21,8 @@ const ChildrenOfParent: FC<ChildrenOfParentProps> = ({ childrenData, bgColor }):
                 <th className={'bg-koalaGreen'}>delete</th>
                 <th colSpan={5} />
             </tr>
-            {childrenData.map(({ data, children }: { data: any; children: any }, i: number) => (
-                <BodyCharacter key={i} characterData={data} secretData={children} bgColor={bgColor} />
+            {childrenData.map(({ data, children }) => (
+                <BodyCharacter key={data.ID} characterData={data} secretData={children} bgColor={bgColor} />
             ))}
         </>
     );

@@ -1,11 +1,12 @@
 import { FC, Suspense } from 'react';
 
+import { MainRecord } from '@/global/types';
 import Loader from '../Loader/Loader';
 import KoalaTableBody from './KoalaTableBody/KoalaTableBody';
 import KoalaTableHead from './KoalaTableHead/KoalaTableHead';
 
 interface KoalaTableProps {
-    data: any; //TODO: add type
+    data: MainRecord[] | [];
 }
 
 const KoalaTable: FC<KoalaTableProps> = ({ data }): JSX.Element => {

@@ -2,17 +2,26 @@ import { FC, useState } from 'react';
 
 import Arrow from '@/components/Icons/Arrow';
 import Cross from '@/components/Icons/Cross';
+import { NemesisRecord, RecordData } from '@/global/types';
 import { cx } from '@/lib/classnames';
 import ChildrenOfParent from './ChildrenOfParent';
 
 interface BodyParentProps {
-    parentData: any;
-    childrenData: any;
+    parentData: RecordData;
+    childrenData:
+        | {}
+        | {
+              has_nemesis: {
+                  records: NemesisRecord[];
+              };
+          };
     index: number;
 }
 
 const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const nemesisData = childrenData as { has_nemesis?: { records: NemesisRecord[] } };
 
     const bgColor = index % 2 === 0 ? 'bg-koalaLightGrey' : 'bg-koalaDarkGrey';
 
@@ -20,7 +29,7 @@ const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): J
         <>
             <tr key={parentData?.ID} className={cx('text-white', bgColor)}>
                 <td>
-                    {childrenData?.has_nemesis && (
+                    {nemesisData?.has_nemesis?.records && (
                         <Arrow
                             className={cx('mx-auto', isOpen && 'rotate-90')}
                             onClick={() => setIsOpen((prev) => !prev)}
@@ -41,8 +50,8 @@ const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): J
                     <Cross onClick={() => alert('TODO')} className="mx-auto" />
                 </td>
             </tr>
-            {isOpen && childrenData?.has_nemesis && (
-                <ChildrenOfParent bgColor={bgColor} childrenData={childrenData?.has_nemesis?.records} />
+            {isOpen && nemesisData?.has_nemesis?.records && (
+                <ChildrenOfParent bgColor={bgColor} childrenData={nemesisData?.has_nemesis?.records} />
             )}
         </>
     );

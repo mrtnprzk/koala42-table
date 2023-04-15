@@ -1,11 +1,12 @@
 import { FC } from 'react';
 
 import Cross from '@/components/Icons/Cross';
+import { SecretData } from '@/global/types';
 import { cx } from '@/lib/classnames';
 
 interface BodySecretProps {
     bgColor: string;
-    secretData: any; //TODO: add type
+    secretData: SecretData;
 }
 
 const BodySecret: FC<BodySecretProps> = ({ bgColor, secretData }): JSX.Element => {
