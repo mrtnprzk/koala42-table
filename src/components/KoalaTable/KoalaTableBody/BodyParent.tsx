@@ -9,7 +9,7 @@ import ChildrenOfParent from './ChildrenOfParent';
 interface BodyParentProps {
     parentData: RecordData;
     childrenData:
-        | {}
+        | object
         | {
               has_nemesis: {
                   records: NemesisRecord[];

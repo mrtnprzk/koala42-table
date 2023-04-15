@@ -9,7 +9,7 @@ import ChildrenOfChildren from './ChildrenOfChildren';
 interface BodyCharacterProps {
     characterData: NemesisData;
     secretData:
-        | {}
+        | object
         | {
               has_secrete: {
                   records: SecretRecord[];

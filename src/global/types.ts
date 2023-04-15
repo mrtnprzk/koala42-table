@@ -6,7 +6,7 @@ export interface SecretData {
 
 export interface SecretRecord {
     data: SecretData;
-    children: {};
+    children: object;
 }
 
 export interface NemesisData {
@@ -19,7 +19,7 @@ export interface NemesisData {
 export interface NemesisRecord {
     data: NemesisData;
     children:
-        | {}
+        | object
         | {
               has_secrete: {
                   records: SecretRecord[];
@@ -43,7 +43,7 @@ export interface RecordData {
 export interface MainRecord {
     data: RecordData;
     children:
-        | {}
+        | object
         | {
               has_nemesis: {
                   records: NemesisRecord[];
