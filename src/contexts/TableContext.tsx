@@ -1,7 +1,7 @@
 import { FC, ReactNode, createContext, useCallback, useEffect, useState } from 'react';
 
 import mockData from '@/__mocks__/example-data.json';
-import { MainRecord, NemesisRecord } from '@/global/types';
+import { MainRecord, NemesisRecord, SecretRecord } from '@/global/types';
 
 interface RecordProviderProps {
     children: ReactNode;
@@ -12,6 +12,7 @@ interface TableContextType {
     records: Array<MainRecord>;
     deleteMainRecord: (id: string) => void;
     deleteNemesisRecord: (id: string) => void;
+    deleteSecretRecord: (id: string) => void;
 }
 
 export const RecordContext = createContext({} as TableContextType);
@@ -19,7 +20,6 @@ export const RecordContext = createContext({} as TableContextType);
 export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [records, setRecords] = useState<Array<MainRecord>>([]);
-    console.log(records);
 
     //delete main record
     const deleteMainRecord = useCallback((recordId: string) => {
@@ -28,29 +28,54 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
 
     //delete nemesis record
     const deleteNemesisRecord = useCallback((nemesisId: string) => {
-        setRecords((prevRecords) => {
-            return prevRecords.map((record) => {
+        setRecords((prevRecords) =>
+            prevRecords.flatMap((record) => {
                 if ('has_nemesis' in record.children) {
-                    const updatedNemesisRecords = record?.children?.has_nemesis?.records?.filter(
+                    const updatedNemesisRecords = record.children.has_nemesis?.records?.filter(
                         (nemesisRecord: NemesisRecord) => nemesisRecord.data.ID !== nemesisId,
                     );
                     const updatedChildren = updatedNemesisRecords?.length
                         ? { has_nemesis: { records: updatedNemesisRecords } }
                         : {};
 
-                    return {
-                        ...record,
-                        children: updatedChildren,
-                    };
+                    return [{ ...record, children: updatedChildren }];
+                }
+
+                return [record];
+            }),
+        );
+    }, []);
+
+    //delete secret record
+    const deleteSecretRecord = useCallback((secretId: string) => {
+        setRecords((prevRecords) => {
+            return prevRecords.flatMap((record) => {
+                if ('has_nemesis' in record?.children) {
+                    const nemesisRecords = record.children.has_nemesis?.records ?? [];
+                    const updatedNemesisRecords = nemesisRecords.flatMap((nemesisRecord: NemesisRecord) => {
+                        if ('has_secrete' in nemesisRecord.children) {
+                            const secretRecords = nemesisRecord.children.has_secrete?.records ?? [];
+                            const updatedSecretRecords = secretRecords.filter(
+                                (secretRecord: SecretRecord) => secretRecord.data.ID !== secretId,
+                            );
+                            const updatedChildren =
+                                updatedSecretRecords.length > 0
+                                    ? { has_secrete: { records: updatedSecretRecords } }
+                                    : {};
+                            return [{ ...nemesisRecord, children: updatedChildren }];
+                        } else {
+                            return nemesisRecord;
+                        }
+                    });
+                    const updatedChildren =
+                        updatedNemesisRecords.length > 0 ? { has_nemesis: { records: updatedNemesisRecords } } : {};
+                    return [{ ...record, children: updatedChildren }];
                 } else {
                     return record;
                 }
             });
         });
     }, []);
-
-    //TODO delete secret record
-    // const deleteSecretRecord = useCallback((secretId: string) => {}, []);
 
     //simulating fetching data
     useEffect(() => {
@@ -63,7 +88,9 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
     }, []);
 
     return (
-        <RecordContext.Provider value={{ isLoading, records, deleteMainRecord, deleteNemesisRecord }}>
+        <RecordContext.Provider
+            value={{ isLoading, records, deleteMainRecord, deleteNemesisRecord, deleteSecretRecord }}
+        >
             {children}
         </RecordContext.Provider>
     );

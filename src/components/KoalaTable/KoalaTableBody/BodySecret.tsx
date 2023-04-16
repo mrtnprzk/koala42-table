@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 
 import Cross from '@/components/Icons/Cross';
+import { RecordContext } from '@/contexts/TableContext';
 import { SecretData } from '@/global/types';
 import { cx } from '@/lib/classnames';
 
@@ -10,6 +11,8 @@ interface BodySecretProps {
 }
 
 const BodySecret: FC<BodySecretProps> = ({ bgColor, secretData }): JSX.Element => {
+    const { deleteSecretRecord } = useContext(RecordContext);
+
     return (
         <tr className={cx('text-white', bgColor)}>
             <td colSpan={2} />
@@ -17,7 +20,7 @@ const BodySecret: FC<BodySecretProps> = ({ bgColor, secretData }): JSX.Element =
             <td>{secretData?.['Nemesis ID']}</td>
             <td>{secretData?.['Secrete Code']}</td>
             <td>
-                <Cross className="m-auto" onClick={() => alert('TODO')} />
+                <Cross className="m-auto" onClick={() => deleteSecretRecord(secretData?.ID)} />
             </td>
             <td colSpan={6} />
         </tr>
