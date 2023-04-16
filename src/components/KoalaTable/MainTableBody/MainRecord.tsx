@@ -25,11 +25,13 @@ const MainRecord: FC<MainRecordProps> = ({ parentData, childrenData, index }): J
 
     const nemesisData = childrenData as { has_nemesis?: { records: Array<NemesisRecordI> } };
 
+    const mainColumnsLength = Object.keys(parentData).length;
+
     const bgColor = index % 2 === 0 ? 'bg-koalaLightGrey' : 'bg-koalaDarkGrey';
 
     return (
         <>
-            <tr key={parentData?.ID} className={cx('text-white', bgColor)}>
+            <tr className={cx('text-white', bgColor)}>
                 <td>
                     {nemesisData?.has_nemesis?.records && (
                         <Arrow
@@ -38,22 +40,17 @@ const MainRecord: FC<MainRecordProps> = ({ parentData, childrenData, index }): J
                         />
                     )}
                 </td>
-                <td>{parentData?.ID}</td>
-                <td>{parentData?.Name}</td>
-                <td>{parentData?.Gender}</td>
-                <td>{parentData?.Ability}</td>
-                <td>{parentData?.['Minimal distance']}</td>
-                <td>{parentData?.Weight}</td>
-                <td>{parentData?.Born}</td>
-                <td>{parentData?.['In space since']}</td>
-                <td>{parentData?.['Beer consumption (l/y)']}</td>
-                <td>{parentData?.['Knows the answer?']}</td>
+                {!!parentData && Object.entries(parentData).map(([key, value]) => <td key={key}>{value}</td>)}
                 <td>
                     <Cross onClick={() => deleteMainRecord(parentData?.ID)} className="mx-auto" />
                 </td>
             </tr>
             {isOpen && nemesisData?.has_nemesis?.records && (
-                <NemesisTableBody bgColor={bgColor} childrenData={nemesisData?.has_nemesis?.records} />
+                <NemesisTableBody
+                    bgColor={bgColor}
+                    mainColumnsLength={mainColumnsLength}
+                    childrenData={nemesisData?.has_nemesis?.records}
+                />
             )}
         </>
     );

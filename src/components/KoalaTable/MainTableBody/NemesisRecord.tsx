@@ -17,13 +17,21 @@ interface NemesisRecordProps {
               };
           };
     bgColor: string;
+    mainColumnsLength: number;
 }
 
-const NemesisRecord: FC<NemesisRecordProps> = ({ nemesisData, secretData, bgColor }): JSX.Element => {
+const NemesisRecord: FC<NemesisRecordProps> = ({
+    nemesisData,
+    secretData,
+    bgColor,
+    mainColumnsLength,
+}): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
     const { deleteNemesisRecord } = useContext(RecordContext);
 
     const secret = secretData as { has_secrete?: { records: Array<SecretRecordI> } };
+
+    const lastSpanLength = mainColumnsLength - Object.keys(nemesisData).length - 1;
 
     return (
         <>
@@ -37,17 +45,18 @@ const NemesisRecord: FC<NemesisRecordProps> = ({ nemesisData, secretData, bgColo
                         />
                     )}
                 </td>
-                <td>{nemesisData?.ID}</td>
-                <td>{nemesisData?.['Is alive?']}</td>
-                <td>{nemesisData?.['Character ID']}</td>
-                <td>{nemesisData?.Years}</td>
+                {!!nemesisData && Object.entries(nemesisData).map(([key, value]) => <td key={key}>{value}</td>)}
                 <td>
                     <Cross className="m-auto" onClick={() => deleteNemesisRecord(nemesisData?.ID)} />
                 </td>
-                <td colSpan={5} />
+                <td colSpan={lastSpanLength} />
             </tr>
             {isOpen && secret?.has_secrete?.records && (
-                <SecretTableBody bgColor={bgColor} secretData={secret?.has_secrete?.records} />
+                <SecretTableBody
+                    bgColor={bgColor}
+                    secretData={secret?.has_secrete?.records}
+                    mainColumnsLength={mainColumnsLength}
+                />
             )}
         </>
     );

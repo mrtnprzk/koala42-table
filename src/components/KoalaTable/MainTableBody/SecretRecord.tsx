@@ -8,21 +8,22 @@ import { cx } from '@/lib/classnames';
 interface SecretRecordProps {
     bgColor: string;
     secretData: SecretDataI;
+    mainColumnsLength: number;
 }
 
-const SecretRecord: FC<SecretRecordProps> = ({ bgColor, secretData }): JSX.Element => {
+const SecretRecord: FC<SecretRecordProps> = ({ bgColor, secretData, mainColumnsLength }): JSX.Element => {
     const { deleteSecretRecord } = useContext(RecordContext);
+
+    const lastSpanLength = mainColumnsLength - Object.keys(secretData).length - 2;
 
     return (
         <tr className={cx('text-white', bgColor)}>
             <td colSpan={3} />
-            <td>{secretData?.ID}</td>
-            <td>{secretData?.['Nemesis ID']}</td>
-            <td>{secretData?.['Secrete Code']}</td>
+            {!!secretData && Object.entries(secretData).map(([key, value]) => <td key={key}>{value}</td>)}
             <td>
                 <Cross className="m-auto" onClick={() => deleteSecretRecord(secretData?.ID)} />
             </td>
-            <td colSpan={5} />
+            <td colSpan={lastSpanLength} />
         </tr>
     );
 };

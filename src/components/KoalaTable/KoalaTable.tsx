@@ -14,7 +14,7 @@ const KoalaTable: FC = (): JSX.Element => {
                 <Loader />
             ) : (
                 <table className="w-screen z-10">
-                    <MainTableHead />
+                    <MainTableHead recordsData={records} />
                     <MainTableBody recordsData={records} />
                 </table>
             )}

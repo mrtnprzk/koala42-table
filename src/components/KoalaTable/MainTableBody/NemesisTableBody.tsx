@@ -6,23 +6,34 @@ import NemesisRecord from './NemesisRecord';
 interface NemesisTableBodyProps {
     childrenData: Array<NemesisRecordI>;
     bgColor: string;
+    mainColumnsLength: number;
 }
 
-const NemesisTableBody: FC<NemesisTableBodyProps> = ({ childrenData, bgColor }): JSX.Element => {
+const NemesisTableBody: FC<NemesisTableBodyProps> = ({ childrenData, bgColor, mainColumnsLength }): JSX.Element => {
+    const lastSpanLength = mainColumnsLength - Object.keys(childrenData[0]?.data).length - 1;
+
     return (
         <>
             <tr className={bgColor}>
                 <th />
                 <th className={'bg-koalaGreen'} />
-                <th className={'bg-koalaGreen'}>ID</th>
-                <th className={'bg-koalaGreen'}>Character ID</th>
-                <th className={'bg-koalaGreen'}>Is alive?</th>
-                <th className={'bg-koalaGreen'}>Years</th>
+                {!!childrenData?.length &&
+                    Object.keys(childrenData[0]?.data).map((key) => (
+                        <th className={'bg-koalaGreen'} key={key}>
+                            {key}
+                        </th>
+                    ))}
                 <th className={'bg-koalaGreen'}>delete</th>
-                <th colSpan={5} />
+                <th colSpan={lastSpanLength} />
             </tr>
             {childrenData.map(({ data, children }) => (
-                <NemesisRecord key={data.ID} nemesisData={data} secretData={children} bgColor={bgColor} />
+                <NemesisRecord
+                    key={data.ID}
+                    nemesisData={data}
+                    secretData={children}
+                    bgColor={bgColor}
+                    mainColumnsLength={mainColumnsLength}
+                />
             ))}
         </>
     );

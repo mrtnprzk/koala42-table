@@ -1,20 +1,16 @@
+import { MainRecordI } from '@/global/types';
 import { FC } from 'react';
 
-const MainTableHead: FC = (): JSX.Element => {
+interface MainTableHeadProps {
+    recordsData: Array<MainRecordI>;
+}
+
+const MainTableHead: FC<MainTableHeadProps> = ({ recordsData }): JSX.Element => {
     return (
         <thead className="bg-koalaGreen sticky top-0 z-10">
             <tr>
                 <th />
-                <th>ID</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Ability</th>
-                <th>Minimal Distance</th>
-                <th>Weight</th>
-                <th>Born</th>
-                <th>In space since</th>
-                <th>Beer consumption (l/y)</th>
-                <th>Knows the answer?</th>
+                {!!recordsData?.length && Object.keys(recordsData[0]?.data).map((key) => <th key={key}>{key}</th>)}
                 <th>delete</th>
             </tr>
         </thead>
