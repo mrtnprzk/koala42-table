@@ -1,7 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 
 import Arrow from '@/components/Icons/Arrow';
 import Cross from '@/components/Icons/Cross';
+import { RecordContext } from '@/contexts/TableContext';
 import { NemesisRecord, RecordData } from '@/global/types';
 import { cx } from '@/lib/classnames';
 import ChildrenOfParent from './ChildrenOfParent';
@@ -20,6 +21,7 @@ interface BodyParentProps {
 
 const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
+    const { deleteMainRecord } = useContext(RecordContext);
 
     const nemesisData = childrenData as { has_nemesis?: { records: Array<NemesisRecord> } };
 
@@ -47,7 +49,7 @@ const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): J
                 <td>{parentData?.['Beer consumption (l/y)']}</td>
                 <td>{parentData?.['Knows the answer?']}</td>
                 <td>
-                    <Cross onClick={() => alert('TODO')} className="mx-auto" />
+                    <Cross onClick={() => deleteMainRecord(parentData?.ID)} className="mx-auto" />
                 </td>
             </tr>
             {isOpen && nemesisData?.has_nemesis?.records && (
