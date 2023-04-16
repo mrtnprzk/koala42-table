@@ -1,20 +1,20 @@
 import { FC } from 'react';
 
 import { MainRecordI } from '@/global/types';
-import BodyParent from './BodyParent';
+import MainRecord from './MainRecord';
 
-interface KoalaTableBodyProps {
+interface MainTableBodyProps {
     recordsData: Array<MainRecordI>;
 }
 
-const KoalaTableBody: FC<KoalaTableBodyProps> = ({ recordsData }): JSX.Element => {
+const MainTableBody: FC<MainTableBodyProps> = ({ recordsData }): JSX.Element => {
     return (
         <tbody className="text-center w-screen bg-koalaDarkGrey">
             {recordsData?.map(({ data, children }, i: number) => (
-                <BodyParent key={data.ID} parentData={data} childrenData={children} index={i} />
+                <MainRecord key={data.ID} parentData={data} childrenData={children} index={i} />
             ))}
         </tbody>
     );
 };
 
-export default KoalaTableBody;
+export default MainTableBody;

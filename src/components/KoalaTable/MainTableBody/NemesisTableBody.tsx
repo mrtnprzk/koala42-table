@@ -1,14 +1,14 @@
 import { FC } from 'react';
 
 import { NemesisRecordI } from '@/global/types';
-import BodyNemesis from './BodyNemesis';
+import NemesisRecord from './NemesisRecord';
 
-interface ChildrenOfParentProps {
+interface NemesisTableBodyProps {
     childrenData: Array<NemesisRecordI>;
     bgColor: string;
 }
 
-const ChildrenOfParent: FC<ChildrenOfParentProps> = ({ childrenData, bgColor }): JSX.Element => {
+const NemesisTableBody: FC<NemesisTableBodyProps> = ({ childrenData, bgColor }): JSX.Element => {
     return (
         <>
             <tr className={bgColor}>
@@ -22,10 +22,10 @@ const ChildrenOfParent: FC<ChildrenOfParentProps> = ({ childrenData, bgColor }):
                 <th colSpan={5} />
             </tr>
             {childrenData.map(({ data, children }) => (
-                <BodyNemesis key={data.ID} nemesisData={data} secretData={children} bgColor={bgColor} />
+                <NemesisRecord key={data.ID} nemesisData={data} secretData={children} bgColor={bgColor} />
             ))}
         </>
     );
 };
 
-export default ChildrenOfParent;
+export default NemesisTableBody;

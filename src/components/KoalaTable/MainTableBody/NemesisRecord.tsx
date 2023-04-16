@@ -5,9 +5,9 @@ import Cross from '@/components/Icons/Cross';
 import { RecordContext } from '@/contexts/TableContext';
 import { NemesisDataI, SecretRecordI } from '@/global/types';
 import { cx } from '@/lib/classnames';
-import ChildrenOfChildren from './ChildrenOfChildren';
+import SecretTableBody from './SecretTableBody';
 
-interface BodyNemesisProps {
+interface NemesisRecordProps {
     nemesisData: NemesisDataI;
     secretData:
         | object
@@ -19,7 +19,7 @@ interface BodyNemesisProps {
     bgColor: string;
 }
 
-const BodyNemesis: FC<BodyNemesisProps> = ({ nemesisData, secretData, bgColor }): JSX.Element => {
+const NemesisRecord: FC<NemesisRecordProps> = ({ nemesisData, secretData, bgColor }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
     const { deleteNemesisRecord } = useContext(RecordContext);
 
@@ -47,10 +47,10 @@ const BodyNemesis: FC<BodyNemesisProps> = ({ nemesisData, secretData, bgColor })
                 <td colSpan={5} />
             </tr>
             {isOpen && secret?.has_secrete?.records && (
-                <ChildrenOfChildren bgColor={bgColor} secretData={secret?.has_secrete?.records} />
+                <SecretTableBody bgColor={bgColor} secretData={secret?.has_secrete?.records} />
             )}
         </>
     );
 };
 
-export default BodyNemesis;
+export default NemesisRecord;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const KoalaTableHead: FC = (): JSX.Element => {
+const MainTableHead: FC = (): JSX.Element => {
     return (
         <thead className="bg-koalaGreen sticky top-0 z-10">
             <tr>
@@ -21,4 +21,4 @@ const KoalaTableHead: FC = (): JSX.Element => {
     );
 };
 
-export default KoalaTableHead;
+export default MainTableHead;

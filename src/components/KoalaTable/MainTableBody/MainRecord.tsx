@@ -5,9 +5,9 @@ import Cross from '@/components/Icons/Cross';
 import { RecordContext } from '@/contexts/TableContext';
 import { NemesisRecordI, RecordDataI } from '@/global/types';
 import { cx } from '@/lib/classnames';
-import ChildrenOfParent from './ChildrenOfParent';
+import NemesisTableBody from './NemesisTableBody';
 
-interface BodyParentProps {
+interface MainRecordProps {
     parentData: RecordDataI;
     childrenData:
         | object
@@ -19,7 +19,7 @@ interface BodyParentProps {
     index: number;
 }
 
-const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): JSX.Element => {
+const MainRecord: FC<MainRecordProps> = ({ parentData, childrenData, index }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
     const { deleteMainRecord } = useContext(RecordContext);
 
@@ -53,10 +53,10 @@ const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): J
                 </td>
             </tr>
             {isOpen && nemesisData?.has_nemesis?.records && (
-                <ChildrenOfParent bgColor={bgColor} childrenData={nemesisData?.has_nemesis?.records} />
+                <NemesisTableBody bgColor={bgColor} childrenData={nemesisData?.has_nemesis?.records} />
             )}
         </>
     );
 };
 
-export default BodyParent;
+export default MainRecord;

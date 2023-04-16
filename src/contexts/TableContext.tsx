@@ -50,7 +50,7 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
     const deleteSecretRecord = useCallback((secretId: string) => {
         setRecords((prevRecords) => {
             return prevRecords.flatMap((record) => {
-                if ('has_nemesis' in record?.children) {
+                if ('has_nemesis' in record.children) {
                     const nemesisRecords = record.children.has_nemesis?.records ?? [];
                     const updatedNemesisRecords = nemesisRecords.flatMap((nemesisRecord: NemesisRecordI) => {
                         if ('has_secrete' in nemesisRecord.children) {
