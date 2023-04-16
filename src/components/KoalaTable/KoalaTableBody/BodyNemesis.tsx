@@ -1,7 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 
 import Arrow from '@/components/Icons/Arrow';
 import Cross from '@/components/Icons/Cross';
+import { RecordContext } from '@/contexts/TableContext';
 import { NemesisData, SecretRecord } from '@/global/types';
 import { cx } from '@/lib/classnames';
 import ChildrenOfChildren from './ChildrenOfChildren';
@@ -20,6 +21,7 @@ interface BodyNemesisProps {
 
 const BodyNemesis: FC<BodyNemesisProps> = ({ nemesisData, secretData, bgColor }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
+    const { deleteNemesisRecord } = useContext(RecordContext);
 
     const secret = secretData as { has_secrete?: { records: Array<SecretRecord> } };
 
@@ -40,7 +42,7 @@ const BodyNemesis: FC<BodyNemesisProps> = ({ nemesisData, secretData, bgColor })
                 <td>{nemesisData?.['Character ID']}</td>
                 <td>{nemesisData?.Years}</td>
                 <td>
-                    <Cross className="m-auto" onClick={() => alert('TODO')} />
+                    <Cross className="m-auto" onClick={() => deleteNemesisRecord(nemesisData?.ID)} />
                 </td>
                 <td colSpan={5} />
             </tr>

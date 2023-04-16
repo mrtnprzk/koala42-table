@@ -21,7 +21,7 @@ export interface NemesisRecord {
     children:
         | object
         | {
-              has_secrete: {
+              has_secrete?: {
                   records: Array<SecretRecord>;
               };
           };
@@ -45,7 +45,7 @@ export interface MainRecord {
     children:
         | object
         | {
-              has_nemesis: {
+              has_nemesis?: {
                   records: Array<NemesisRecord>;
               };
           };
