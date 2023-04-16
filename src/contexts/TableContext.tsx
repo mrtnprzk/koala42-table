@@ -1,4 +1,4 @@
-import { FC, ReactNode, createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, ReactNode, createContext, useCallback, useEffect, useState } from 'react';
 
 import mockData from '@/__mocks__/example-data.json';
 import { MainRecordI, NemesisRecordI, SecretRecordI } from '@/global/types';
@@ -80,7 +80,7 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
     //simulating fetching data
     useEffect(() => {
         //Normaly here could be try/catch/finally with handling error
-        //I like to use react-query to fetch data
+        //I like to use react-query to fetch data with custom hooks
 
         setIsLoading(true);
         setRecords(mockData);
@@ -90,10 +90,7 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
         }, 2000);
     }, []);
 
-    const value = useMemo(
-        () => ({ isLoading, records, deleteMainRecord, deleteNemesisRecord, deleteSecretRecord }),
-        [records],
-    );
+    const value = { isLoading, records, deleteMainRecord, deleteNemesisRecord, deleteSecretRecord };
 
     return <RecordContext.Provider value={value}>{children}</RecordContext.Provider>;
 };
