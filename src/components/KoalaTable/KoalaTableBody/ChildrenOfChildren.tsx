@@ -5,7 +5,7 @@ import BodySecret from './BodySecret';
 
 interface ChildrenOfChildrenProps {
     bgColor: string;
-    secretData: SecretRecord[];
+    secretData: Array<SecretRecord>;
 }
 
 const ChildrenOfChildren: FC<ChildrenOfChildrenProps> = ({ bgColor, secretData }): JSX.Element => {

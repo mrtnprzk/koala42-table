@@ -22,7 +22,7 @@ export interface NemesisRecord {
         | object
         | {
               has_secrete: {
-                  records: SecretRecord[];
+                  records: Array<SecretRecord>;
               };
           };
 }
@@ -46,7 +46,7 @@ export interface MainRecord {
         | object
         | {
               has_nemesis: {
-                  records: NemesisRecord[];
+                  records: Array<NemesisRecord>;
               };
           };
 }

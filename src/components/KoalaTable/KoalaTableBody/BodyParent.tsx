@@ -12,7 +12,7 @@ interface BodyParentProps {
         | object
         | {
               has_nemesis: {
-                  records: NemesisRecord[];
+                  records: Array<NemesisRecord>;
               };
           };
     index: number;
@@ -21,7 +21,7 @@ interface BodyParentProps {
 const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const nemesisData = childrenData as { has_nemesis?: { records: NemesisRecord[] } };
+    const nemesisData = childrenData as { has_nemesis?: { records: Array<NemesisRecord> } };
 
     const bgColor = index % 2 === 0 ? 'bg-koalaLightGrey' : 'bg-koalaDarkGrey';
 

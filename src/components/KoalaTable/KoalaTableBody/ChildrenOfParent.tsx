@@ -4,7 +4,7 @@ import { NemesisRecord } from '@/global/types';
 import BodyNemesis from './BodyNemesis';
 
 interface ChildrenOfParentProps {
-    childrenData: NemesisRecord[];
+    childrenData: Array<NemesisRecord>;
     bgColor: string;
 }
 

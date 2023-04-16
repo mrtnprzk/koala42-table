@@ -4,13 +4,13 @@ import { MainRecord } from '@/global/types';
 import BodyParent from './BodyParent';
 
 interface KoalaTableBodyProps {
-    data: MainRecord[] | [];
+    recordsData: Array<MainRecord>;
 }
 
-const KoalaTableBody: FC<KoalaTableBodyProps> = ({ data }): JSX.Element => {
+const KoalaTableBody: FC<KoalaTableBodyProps> = ({ recordsData }): JSX.Element => {
     return (
         <tbody className="text-center w-screen bg-koalaDarkGrey">
-            {data?.map(({ data, children }, i: number) => (
+            {recordsData?.map(({ data, children }, i: number) => (
                 <BodyParent key={data.ID} parentData={data} childrenData={children} index={i} />
             ))}
         </tbody>

@@ -12,7 +12,7 @@ interface BodyNemesisProps {
         | object
         | {
               has_secrete: {
-                  records: SecretRecord[];
+                  records: Array<SecretRecord>;
               };
           };
     bgColor: string;
@@ -21,7 +21,7 @@ interface BodyNemesisProps {
 const BodyNemesis: FC<BodyNemesisProps> = ({ nemesisData, secretData, bgColor }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const secret = secretData as { has_secrete?: { records: SecretRecord[] } };
+    const secret = secretData as { has_secrete?: { records: Array<SecretRecord> } };
 
     return (
         <>
