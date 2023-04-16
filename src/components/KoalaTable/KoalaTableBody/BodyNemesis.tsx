@@ -3,17 +3,17 @@ import { FC, useContext, useState } from 'react';
 import Arrow from '@/components/Icons/Arrow';
 import Cross from '@/components/Icons/Cross';
 import { RecordContext } from '@/contexts/TableContext';
-import { NemesisData, SecretRecord } from '@/global/types';
+import { NemesisDataI, SecretRecordI } from '@/global/types';
 import { cx } from '@/lib/classnames';
 import ChildrenOfChildren from './ChildrenOfChildren';
 
 interface BodyNemesisProps {
-    nemesisData: NemesisData;
+    nemesisData: NemesisDataI;
     secretData:
         | object
         | {
               has_secrete: {
-                  records: Array<SecretRecord>;
+                  records: Array<SecretRecordI>;
               };
           };
     bgColor: string;
@@ -23,7 +23,7 @@ const BodyNemesis: FC<BodyNemesisProps> = ({ nemesisData, secretData, bgColor })
     const [isOpen, setIsOpen] = useState(false);
     const { deleteNemesisRecord } = useContext(RecordContext);
 
-    const secret = secretData as { has_secrete?: { records: Array<SecretRecord> } };
+    const secret = secretData as { has_secrete?: { records: Array<SecretRecordI> } };
 
     return (
         <>

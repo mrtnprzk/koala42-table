@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import { NemesisRecord } from '@/global/types';
+import { NemesisRecordI } from '@/global/types';
 import BodyNemesis from './BodyNemesis';
 
 interface ChildrenOfParentProps {
-    childrenData: Array<NemesisRecord>;
+    childrenData: Array<NemesisRecordI>;
     bgColor: string;
 }
 

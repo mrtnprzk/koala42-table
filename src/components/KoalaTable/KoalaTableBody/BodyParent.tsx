@@ -3,17 +3,17 @@ import { FC, useContext, useState } from 'react';
 import Arrow from '@/components/Icons/Arrow';
 import Cross from '@/components/Icons/Cross';
 import { RecordContext } from '@/contexts/TableContext';
-import { NemesisRecord, RecordData } from '@/global/types';
+import { NemesisRecordI, RecordDataI } from '@/global/types';
 import { cx } from '@/lib/classnames';
 import ChildrenOfParent from './ChildrenOfParent';
 
 interface BodyParentProps {
-    parentData: RecordData;
+    parentData: RecordDataI;
     childrenData:
         | object
         | {
               has_nemesis: {
-                  records: Array<NemesisRecord>;
+                  records: Array<NemesisRecordI>;
               };
           };
     index: number;
@@ -23,7 +23,7 @@ const BodyParent: FC<BodyParentProps> = ({ parentData, childrenData, index }): J
     const [isOpen, setIsOpen] = useState(false);
     const { deleteMainRecord } = useContext(RecordContext);
 
-    const nemesisData = childrenData as { has_nemesis?: { records: Array<NemesisRecord> } };
+    const nemesisData = childrenData as { has_nemesis?: { records: Array<NemesisRecordI> } };
 
     const bgColor = index % 2 === 0 ? 'bg-koalaLightGrey' : 'bg-koalaDarkGrey';
 

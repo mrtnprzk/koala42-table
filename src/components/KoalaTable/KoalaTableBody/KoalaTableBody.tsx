@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import { MainRecord } from '@/global/types';
+import { MainRecordI } from '@/global/types';
 import BodyParent from './BodyParent';
 
 interface KoalaTableBodyProps {
-    recordsData: Array<MainRecord>;
+    recordsData: Array<MainRecordI>;
 }
 
 const KoalaTableBody: FC<KoalaTableBodyProps> = ({ recordsData }): JSX.Element => {

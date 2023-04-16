@@ -1,33 +1,33 @@
-export interface SecretData {
+export interface SecretDataI {
     ID: string;
     'Nemesis ID': string;
     'Secrete Code': string;
 }
 
-export interface SecretRecord {
-    data: SecretData;
+export interface SecretRecordI {
+    data: SecretDataI;
     children: object;
 }
 
-export interface NemesisData {
+export interface NemesisDataI {
     ID: string;
     'Character ID': string;
     'Is alive?': string;
     Years: string;
 }
 
-export interface NemesisRecord {
-    data: NemesisData;
+export interface NemesisRecordI {
+    data: NemesisDataI;
     children:
         | object
         | {
               has_secrete?: {
-                  records: Array<SecretRecord>;
+                  records: Array<SecretRecordI>;
               };
           };
 }
 
-export interface RecordData {
+export interface RecordDataI {
     ID: string;
     Name: string;
     Gender: string;
@@ -40,13 +40,13 @@ export interface RecordData {
     'Knows the answer?': string;
 }
 
-export interface MainRecord {
-    data: RecordData;
+export interface MainRecordI {
+    data: RecordDataI;
     children:
         | object
         | {
               has_nemesis?: {
-                  records: Array<NemesisRecord>;
+                  records: Array<NemesisRecordI>;
               };
           };
 }

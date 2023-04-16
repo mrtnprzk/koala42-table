@@ -2,12 +2,12 @@ import { FC, useContext } from 'react';
 
 import Cross from '@/components/Icons/Cross';
 import { RecordContext } from '@/contexts/TableContext';
-import { SecretData } from '@/global/types';
+import { SecretDataI } from '@/global/types';
 import { cx } from '@/lib/classnames';
 
 interface BodySecretProps {
     bgColor: string;
-    secretData: SecretData;
+    secretData: SecretDataI;
 }
 
 const BodySecret: FC<BodySecretProps> = ({ bgColor, secretData }): JSX.Element => {

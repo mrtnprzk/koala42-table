@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-import { SecretRecord } from '@/global/types';
+import { SecretRecordI } from '@/global/types';
 import BodySecret from './BodySecret';
 
 interface ChildrenOfChildrenProps {
     bgColor: string;
-    secretData: Array<SecretRecord>;
+    secretData: Array<SecretRecordI>;
 }
 
 const ChildrenOfChildren: FC<ChildrenOfChildrenProps> = ({ bgColor, secretData }): JSX.Element => {

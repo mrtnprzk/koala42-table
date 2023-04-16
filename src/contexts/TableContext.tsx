@@ -1,7 +1,7 @@
 import { FC, ReactNode, createContext, useCallback, useEffect, useState } from 'react';
 
 import mockData from '@/__mocks__/example-data.json';
-import { MainRecord, NemesisRecord, SecretRecord } from '@/global/types';
+import { MainRecordI, NemesisRecordI, SecretRecordI } from '@/global/types';
 
 interface RecordProviderProps {
     children: ReactNode;
@@ -9,7 +9,7 @@ interface RecordProviderProps {
 
 interface TableContextType {
     isLoading: boolean;
-    records: Array<MainRecord>;
+    records: Array<MainRecordI>;
     deleteMainRecord: (id: string) => void;
     deleteNemesisRecord: (id: string) => void;
     deleteSecretRecord: (id: string) => void;
@@ -19,7 +19,7 @@ export const RecordContext = createContext({} as TableContextType);
 
 export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [records, setRecords] = useState<Array<MainRecord>>([]);
+    const [records, setRecords] = useState<Array<MainRecordI>>([]);
 
     //delete main record
     const deleteMainRecord = useCallback((recordId: string) => {
@@ -32,7 +32,7 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
             prevRecords.flatMap((record) => {
                 if ('has_nemesis' in record.children) {
                     const updatedNemesisRecords = record.children.has_nemesis?.records?.filter(
-                        (nemesisRecord: NemesisRecord) => nemesisRecord.data.ID !== nemesisId,
+                        (nemesisRecord: NemesisRecordI) => nemesisRecord.data.ID !== nemesisId,
                     );
                     const updatedChildren = updatedNemesisRecords?.length
                         ? { has_nemesis: { records: updatedNemesisRecords } }
@@ -52,11 +52,11 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
             return prevRecords.flatMap((record) => {
                 if ('has_nemesis' in record?.children) {
                     const nemesisRecords = record.children.has_nemesis?.records ?? [];
-                    const updatedNemesisRecords = nemesisRecords.flatMap((nemesisRecord: NemesisRecord) => {
+                    const updatedNemesisRecords = nemesisRecords.flatMap((nemesisRecord: NemesisRecordI) => {
                         if ('has_secrete' in nemesisRecord.children) {
                             const secretRecords = nemesisRecord.children.has_secrete?.records ?? [];
                             const updatedSecretRecords = secretRecords.filter(
-                                (secretRecord: SecretRecord) => secretRecord.data.ID !== secretId,
+                                (secretRecord: SecretRecordI) => secretRecord.data.ID !== secretId,
                             );
                             const updatedChildren =
                                 updatedSecretRecords.length > 0
