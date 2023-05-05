@@ -31,7 +31,6 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
             prevRecords.flatMap((record) => {
                 if ('has_nemesis' in record.children) {
                     const updatedNemesisRecords = record.children.has_nemesis?.records?.filter(
-                        (nemesisRecord: NemesisRecordI) => nemesisRecord.data.ID !== nemesisId,
                         (nemesisRecord) => nemesisRecord.data.ID !== nemesisId,
                     );
                     const updatedChildren = updatedNemesisRecords?.length
