@@ -29,8 +29,8 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
     const deleteNemesisRecord = (nemesisId: string) => {
         setRecords((prevRecords) =>
             prevRecords.flatMap((record) => {
-                if ('has_nemesis' in record.children) {
-                    const updatedNemesisRecords = record.children.has_nemesis?.records?.filter(
+                if (record?.children?.has_nemesis) {
+                    const updatedNemesisRecords = record.children.has_nemesis.records?.filter(
                         (nemesisRecord) => nemesisRecord.data.ID !== nemesisId,
                     );
                     const updatedChildren = updatedNemesisRecords?.length
@@ -49,10 +49,10 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
     const deleteSecretRecord = (secretId: string) => {
         setRecords((prevRecords) => {
             return prevRecords.flatMap((record) => {
-                if ('has_nemesis' in record.children) {
-                    const nemesisRecords = record.children.has_nemesis?.records ?? [];
+                if (record?.children?.has_nemesis) {
+                    const nemesisRecords = record.children.has_nemesis.records ?? [];
                     const updatedNemesisRecords = nemesisRecords.flatMap((nemesisRecord) => {
-                        if ('has_secrete' in nemesisRecord.children) {
+                        if (nemesisRecord?.children?.has_secrete) {
                             const secretRecords = nemesisRecord.children.has_secrete?.records ?? [];
                             const updatedSecretRecords = secretRecords.filter(
                                 (secretRecord) => secretRecord.data.ID !== secretId,
