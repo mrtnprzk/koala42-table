@@ -3,19 +3,13 @@ import { FC, useContext, useState } from 'react';
 import Arrow from '@/components/Icons/Arrow';
 import Cross from '@/components/Icons/Cross';
 import { RecordContext } from '@/contexts/TableContext';
-import { NemesisDataI, SecretRecordI } from '@/global/types';
+import { NemesisData, NemesisRecordChildren } from '@/global/types';
 import { cx } from '@/lib/classnames';
 import SecretTableBody from './SecretTableBody';
 
 interface NemesisRecordProps {
-    nemesisData: NemesisDataI;
-    secretData:
-        | object
-        | {
-              has_secrete: {
-                  records: Array<SecretRecordI>;
-              };
-          };
+    nemesisData: NemesisData;
+    secretData: NemesisRecordChildren;
     bgColor: string;
     mainColumnsLength: number;
 }
@@ -29,8 +23,6 @@ const NemesisRecord: FC<NemesisRecordProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const { deleteNemesisRecord } = useContext(RecordContext);
 
-    const secret = secretData as { has_secrete?: { records: Array<SecretRecordI> } };
-
     const lastSpanLength = mainColumnsLength - Object.keys(nemesisData).length - 1;
 
     return (
@@ -38,7 +30,7 @@ const NemesisRecord: FC<NemesisRecordProps> = ({
             <tr className={cx('text-white', bgColor)}>
                 <td />
                 <td>
-                    {secret?.has_secrete && (
+                    {secretData?.has_secrete && (
                         <Arrow
                             className={cx('ml-auto', isOpen && 'rotate-90')}
                             onClick={() => setIsOpen((prev) => !prev)}
@@ -51,10 +43,10 @@ const NemesisRecord: FC<NemesisRecordProps> = ({
                 </td>
                 <td colSpan={lastSpanLength} />
             </tr>
-            {isOpen && secret?.has_secrete?.records && (
+            {isOpen && secretData?.has_secrete?.records && (
                 <SecretTableBody
                     bgColor={bgColor}
-                    secretData={secret?.has_secrete?.records}
+                    secretData={secretData?.has_secrete?.records}
                     mainColumnsLength={mainColumnsLength}
                 />
             )}

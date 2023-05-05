@@ -1,7 +1,6 @@
-import { FC, ReactNode, createContext, useCallback, useEffect, useState } from 'react';
+import { FC, ReactNode, createContext, useEffect, useMemo, useState } from 'react';
 
-import mockData from '@/__mocks__/example-data.json';
-import { MainRecordI, NemesisRecordI, SecretRecordI } from '@/global/types';
+import { MainRecord } from '@/global/types';
 
 interface RecordProviderProps {
     children: ReactNode;
@@ -9,7 +8,7 @@ interface RecordProviderProps {
 
 interface TableContextType {
     isLoading: boolean;
-    records: Array<MainRecordI>;
+    records: Array<MainRecord>;
     deleteMainRecord: (id: string) => void;
     deleteNemesisRecord: (id: string) => void;
     deleteSecretRecord: (id: string) => void;
@@ -19,20 +18,21 @@ export const RecordContext = createContext({} as TableContextType);
 
 export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [records, setRecords] = useState<Array<MainRecordI>>([]);
+    const [records, setRecords] = useState<Array<MainRecord>>([]);
 
     //delete main record
-    const deleteMainRecord = useCallback((recordId: string) => {
+    const deleteMainRecord = (recordId: string) => {
         setRecords((prevRecords) => prevRecords.filter((record) => record.data.ID !== recordId));
-    }, []);
+    };
 
     //delete nemesis record
-    const deleteNemesisRecord = useCallback((nemesisId: string) => {
+    const deleteNemesisRecord = (nemesisId: string) => {
         setRecords((prevRecords) =>
             prevRecords.flatMap((record) => {
                 if ('has_nemesis' in record.children) {
                     const updatedNemesisRecords = record.children.has_nemesis?.records?.filter(
                         (nemesisRecord: NemesisRecordI) => nemesisRecord.data.ID !== nemesisId,
+                        (nemesisRecord) => nemesisRecord.data.ID !== nemesisId,
                     );
                     const updatedChildren = updatedNemesisRecords?.length
                         ? { has_nemesis: { records: updatedNemesisRecords } }
@@ -44,19 +44,19 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
                 return [record];
             }),
         );
-    }, []);
+    };
 
     //delete secret record
-    const deleteSecretRecord = useCallback((secretId: string) => {
+    const deleteSecretRecord = (secretId: string) => {
         setRecords((prevRecords) => {
             return prevRecords.flatMap((record) => {
                 if ('has_nemesis' in record.children) {
                     const nemesisRecords = record.children.has_nemesis?.records ?? [];
-                    const updatedNemesisRecords = nemesisRecords.flatMap((nemesisRecord: NemesisRecordI) => {
+                    const updatedNemesisRecords = nemesisRecords.flatMap((nemesisRecord) => {
                         if ('has_secrete' in nemesisRecord.children) {
                             const secretRecords = nemesisRecord.children.has_secrete?.records ?? [];
                             const updatedSecretRecords = secretRecords.filter(
-                                (secretRecord: SecretRecordI) => secretRecord.data.ID !== secretId,
+                                (secretRecord) => secretRecord.data.ID !== secretId,
                             );
                             const updatedChildren =
                                 updatedSecretRecords.length > 0
@@ -75,22 +75,30 @@ export const RecordProvider: FC<RecordProviderProps> = ({ children }) => {
                 }
             });
         });
-    }, []);
+    };
 
     //simulating fetching data
     useEffect(() => {
-        //Normaly here could be try/catch/finally with handling error
-        //I like to use react-query to fetch data with custom hooks
+        const fetchData = async () => {
+            setIsLoading(true);
 
-        setIsLoading(true);
-        setRecords(mockData);
-
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
+            try {
+                const response = await fetch('./__mocks__/example-data.json');
+                const data = await response.json();
+                setRecords(data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchData();
     }, []);
 
-    const value = { isLoading, records, deleteMainRecord, deleteNemesisRecord, deleteSecretRecord };
+    const value = useMemo(
+        () => ({ isLoading, records, deleteMainRecord, deleteNemesisRecord, deleteSecretRecord }),
+        [records],
+    );
 
     return <RecordContext.Provider value={value}>{children}</RecordContext.Provider>;
 };

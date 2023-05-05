@@ -1,16 +1,16 @@
 import { FC } from 'react';
 
-import { NemesisRecordI } from '@/global/types';
+import { NemesisRecord as NemesisRecordT } from '@/global/types';
 import NemesisRecord from './NemesisRecord';
 
 interface NemesisTableBodyProps {
-    childrenData: Array<NemesisRecordI>;
+    childrenData: Array<NemesisRecordT>;
     bgColor: string;
     mainColumnsLength: number;
 }
 
 const NemesisTableBody: FC<NemesisTableBodyProps> = ({ childrenData, bgColor, mainColumnsLength }): JSX.Element => {
-    const lastSpanLength = mainColumnsLength - Object.keys(childrenData[0]?.data).length - 1;
+    const lastSpanLength = childrenData && mainColumnsLength - Object.keys(childrenData[0]?.data).length - 1;
 
     return (
         <>

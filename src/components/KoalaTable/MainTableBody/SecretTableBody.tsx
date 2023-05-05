@@ -1,18 +1,16 @@
 import { FC } from 'react';
 
-import { SecretRecordI } from '@/global/types';
+import { SecretRecord as SecretRecordT } from '@/global/types';
 import SecretRecord from './SecretRecord';
 
 interface SecretTableBodyProps {
     bgColor: string;
-    secretData: Array<SecretRecordI>;
+    secretData: Array<SecretRecordT>;
     mainColumnsLength: number;
 }
 
 const SecretTableBody: FC<SecretTableBodyProps> = ({ bgColor, secretData, mainColumnsLength }): JSX.Element => {
-    console.log(secretData);
-
-    const lastSpanLength = mainColumnsLength - Object.keys(secretData[0]?.data).length - 2;
+    const lastSpanLength = secretData && mainColumnsLength - Object.keys(secretData[0]?.data).length - 2;
 
     return (
         <>

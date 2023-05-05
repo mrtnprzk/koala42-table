@@ -1,33 +1,32 @@
-export interface SecretDataI {
+export type SecretData = {
     ID: string;
     'Nemesis ID': string;
     'Secrete Code': string;
-}
+};
 
-export interface SecretRecordI {
-    data: SecretDataI;
+export type SecretRecord = {
+    data: SecretData;
     children: object;
-}
+};
 
-export interface NemesisDataI {
+export type NemesisData = {
     ID: string;
     'Character ID': string;
     'Is alive?': string;
     Years: string;
-}
+};
 
-export interface NemesisRecordI {
-    data: NemesisDataI;
-    children:
-        | object
-        | {
-              has_secrete?: {
-                  records: Array<SecretRecordI>;
-              };
-          };
-}
+export type NemesisRecordChildren = {
+    has_secrete?: {
+        records: Array<SecretRecord>;
+    };
+};
+export type NemesisRecord = {
+    data: NemesisData;
+    children: NemesisRecordChildren;
+};
 
-export interface RecordDataI {
+export type RecordData = {
     ID: string;
     Name: string;
     Gender: string;
@@ -38,15 +37,15 @@ export interface RecordDataI {
     'In space since': string;
     'Beer consumption (l/y)': string;
     'Knows the answer?': string;
-}
+};
 
-export interface MainRecordI {
-    data: RecordDataI;
-    children:
-        | object
-        | {
-              has_nemesis?: {
-                  records: Array<NemesisRecordI>;
-              };
-          };
-}
+export type MainRecordChildren = {
+    has_nemesis?: {
+        records: Array<NemesisRecord>;
+    };
+};
+
+export type MainRecord = {
+    data: RecordData;
+    children: MainRecordChildren;
+};

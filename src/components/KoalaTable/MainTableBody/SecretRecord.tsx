@@ -2,12 +2,12 @@ import { FC, useContext } from 'react';
 
 import Cross from '@/components/Icons/Cross';
 import { RecordContext } from '@/contexts/TableContext';
-import { SecretDataI } from '@/global/types';
+import { SecretData } from '@/global/types';
 import { cx } from '@/lib/classnames';
 
 interface SecretRecordProps {
     bgColor: string;
-    secretData: SecretDataI;
+    secretData: SecretData;
     mainColumnsLength: number;
 }
 

@@ -3,27 +3,19 @@ import { FC, useContext, useState } from 'react';
 import Arrow from '@/components/Icons/Arrow';
 import Cross from '@/components/Icons/Cross';
 import { RecordContext } from '@/contexts/TableContext';
-import { NemesisRecordI, RecordDataI } from '@/global/types';
+import { MainRecordChildren, RecordData } from '@/global/types';
 import { cx } from '@/lib/classnames';
 import NemesisTableBody from './NemesisTableBody';
 
 interface MainRecordProps {
-    parentData: RecordDataI;
-    childrenData:
-        | object
-        | {
-              has_nemesis: {
-                  records: Array<NemesisRecordI>;
-              };
-          };
+    parentData: RecordData;
+    childrenData: MainRecordChildren;
     index: number;
 }
 
 const MainRecord: FC<MainRecordProps> = ({ parentData, childrenData, index }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
     const { deleteMainRecord } = useContext(RecordContext);
-
-    const nemesisData = childrenData as { has_nemesis?: { records: Array<NemesisRecordI> } };
 
     const mainColumnsLength = Object.keys(parentData).length;
 
@@ -33,7 +25,7 @@ const MainRecord: FC<MainRecordProps> = ({ parentData, childrenData, index }): J
         <>
             <tr className={cx('text-white', bgColor)}>
                 <td>
-                    {nemesisData?.has_nemesis?.records && (
+                    {childrenData?.has_nemesis?.records && (
                         <Arrow
                             className={cx('mx-auto', isOpen && 'rotate-90')}
                             onClick={() => setIsOpen((prev) => !prev)}
@@ -45,11 +37,11 @@ const MainRecord: FC<MainRecordProps> = ({ parentData, childrenData, index }): J
                     <Cross onClick={() => deleteMainRecord(parentData?.ID)} className="mx-auto" />
                 </td>
             </tr>
-            {isOpen && nemesisData?.has_nemesis?.records && (
+            {isOpen && childrenData?.has_nemesis?.records && (
                 <NemesisTableBody
                     bgColor={bgColor}
                     mainColumnsLength={mainColumnsLength}
-                    childrenData={nemesisData?.has_nemesis?.records}
+                    childrenData={childrenData?.has_nemesis?.records}
                 />
             )}
         </>
