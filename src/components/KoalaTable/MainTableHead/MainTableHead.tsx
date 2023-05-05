@@ -1,8 +1,8 @@
-import { MainRecordI } from '@/global/types';
+import { MainRecord } from '@/global/types';
 import { FC } from 'react';
 
 interface MainTableHeadProps {
-    recordsData: Array<MainRecordI>;
+    recordsData: Array<MainRecord>;
 }
 
 const MainTableHead: FC<MainTableHeadProps> = ({ recordsData }): JSX.Element => {
